@@ -1,0 +1,66 @@
+.carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 31.25rem;
+  padding: 4rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+
+  &-list {
+    background-color: $color-garm-deep-blue;
+    color: #FFF;
+
+    h2 {
+      color: #FFF;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+
+      a {
+        color: #FFF;
+
+        &:hover {
+          outline: none;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &-detail {
+    background-color: $color-garm-grey;
+  }
+
+  &-control {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    &-prev, &-next {
+      color: #FFF;
+      background-color: $color-garm-blue;
+
+      border: none;
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 1.375rem;
+      line-height: 1.875rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+
+  h2, p, a {
+    max-width: 22rem;
+  }
+}

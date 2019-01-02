@@ -1,0 +1,41 @@
+@mixin hook-navbar() {
+  padding-top: .5rem;
+
+  @for $i from 1 through 4 {
+    &-nav li:nth-child(#{$i}n) {
+      animation: #{$i * .4}s cubic-bezier(0.215, 0.61, 0.355, 1) 0s 1 fade-up-nav-item;
+    }
+  }
+}
+
+@mixin hook-navbar-nav-item() {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 1rem;
+    width: 0;
+    height: 2px;
+    background-color: $color-garm-blue;
+  }
+}
+
+@mixin hook-navbar-nav-item-hover() {
+  &:after {
+    width: 100%;
+    transition: width 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+}
+
+@keyframes fade-up-nav-item {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
