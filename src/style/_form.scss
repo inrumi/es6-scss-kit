@@ -1,10 +1,9 @@
 .form {
-  display: flex;
-  flex-direction: column;
 
   &-input {
     position: relative;
-    margin-bottom: 30px;
+    padding-top: 18px;
+    margin-bottom: 12px;
 
     input:not([type='submit']):not([type="radio"]):not([type="checkbox"]) {
       width: 100%;
@@ -43,6 +42,8 @@
   }
 
   &-textarea {
+    margin-bottom: 12px;
+
     label {
       display: block;
       color: #FFF;

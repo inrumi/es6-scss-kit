@@ -1,5 +1,82 @@
-/*
-const titleList = document.querySelectorAll('.mission-title-list-item');
+import {$, $$} from './modules/bling';
+
+const nav = $('nav');
+const navBar = $('.uk-navbar-nav');
+const navToggle = $('.uk-navbar-toggle');
+const navDropdown = $('.uk-navbar-dropdown');
+const titleList = $$('.mission-title-list-item');
+const garmFormItems = $$('.form-input');
+
+const isInViewY = function (element, visibilityPercent = 100) {
+  const rect = element.getBoundingClientRect();
+  return rect.bottom >= (rect.height * (visibilityPercent / 100));
+};
+
+const handleView = function () {
+  const viewPort = document.documentElement.getBoundingClientRect();
+
+  if (isInViewY(nav, 20) && viewPort.top === 0) {
+    nav.classList.remove('sticky-navbar');
+    navBar.classList.remove('close');
+    navBar.classList.add('open');
+  } else {
+    nav.classList.add('sticky-navbar');
+    navBar.classList.add('close');
+    navBar.classList.remove('open');
+    nav.classList.remove('open');
+  }
+};
+
+window.on(
+    'scroll',
+    handleView
+);
+
+handleView();
+
+navToggle.on(
+    'click',
+    function (event) {
+      event.preventDefault();
+
+      if (!navBar.classList.contains('open')) {
+        nav.classList.add('open');
+        navBar.classList.add('open');
+        navBar.classList.remove('close');
+      } else {
+        navBar.classList.remove('open');
+        navBar.classList.add('closing');
+
+        setTimeout(
+            () => {
+              navBar.classList.remove('closing');
+              navBar.classList.add('close');
+              nav.classList.remove('open');
+            },
+            400
+        )
+      }
+    }
+);
+
+navDropdown.parentNode.childNodes.on(
+    'mouseover',
+    function (event) {
+      event.preventDefault();
+      navDropdown.classList.add('uk-open');
+    }
+);
+
+navDropdown.parentNode.childNodes.on(
+    'mouseout',
+    function (event) {
+      event.preventDefault();
+
+      navDropdown.classList.remove('uk-open');
+    }
+);
+
+
 let current = 0;
 
 setInterval(
@@ -10,17 +87,18 @@ setInterval(
     },
     2500
 );
-*/
-
-const garmFormItems = document.querySelectorAll('.garm-form-item');
 
 for (let formItem of garmFormItems) {
-  formItem.children[0].addEventListener('input', function () {
-    if (!this.value) return;
-    formItem.children[1].classList.add('label--active')
+  formItem.children[0].on('input', function () {
+    if (!this.value) {
+      formItem.children[1].classList.remove('label--active');
+      return;
+    }
+
+    formItem.children[1].classList.add('label--active');
   });
 
   if (formItem.children[0].value) {
-    formItem.children[1].classList.add('label--active')
+    formItem.children[1].classList.add('label--active');
   }
 }
