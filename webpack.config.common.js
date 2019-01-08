@@ -24,9 +24,4 @@ module.exports = {
       }
     ]
   },
-  // resolve: {
-  //   alias: {
-  //     'uikit-util': Path.resolve(__dirname, 'node_modules/uikit/src/js/util')
-  //   }
-  // }
 };

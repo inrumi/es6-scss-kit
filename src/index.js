@@ -1,4 +1,5 @@
 import {$, $$} from './modules/bling';
+import Wallop from 'wallop';
 
 const nav = $('nav');
 const navBar = $('.uk-navbar-nav');
@@ -6,16 +7,22 @@ const navToggle = $('.uk-navbar-toggle');
 const navDropdown = $('.uk-navbar-dropdown');
 const titleList = $$('.mission-title-list-item');
 const garmFormItems = $$('.form-input');
+const carouselItem = $('#carousel');
+const carouselControl = $('.carousel-control');
+const carouselNavList = $$('.carousel-list ul li');
+const tiles = $('#tiles');
 
-const isInViewY = function (element, visibilityPercent = 100) {
+const isInViewY = function (element, visibilityPercent = 0) {
   const rect = element.getBoundingClientRect();
-  return rect.bottom >= (rect.height * (visibilityPercent / 100));
+  return (
+      rect.top <= (rect.height * (visibilityPercent / 100)) &&
+      rect.bottom >= (rect.height * (visibilityPercent / 100))
+  );
 };
 
 const handleView = function () {
   const viewPort = document.documentElement.getBoundingClientRect();
-
-  if (isInViewY(nav, 20) && viewPort.top === 0) {
+  if (isInViewY(nav) && viewPort.top === 0) {
     nav.classList.remove('sticky-navbar');
     navBar.classList.remove('close');
     navBar.classList.add('open');
@@ -25,6 +32,8 @@ const handleView = function () {
     navBar.classList.remove('open');
     nav.classList.remove('open');
   }
+
+  console.log(isInViewY(tiles, 60));
 };
 
 window.on(
@@ -102,3 +111,21 @@ for (let formItem of garmFormItems) {
     formItem.children[1].classList.add('label--active');
   }
 }
+
+
+const carousel = new Wallop(carouselItem);
+
+carousel.on(
+    'change',
+    function ({detail}) {
+      carouselNavList.forEach(item => item.classList.remove('active'));
+      carouselNavList[detail.currentItemIndex].classList.add('active');
+    }
+);
+
+
+carouselNavList.forEach(
+    (navItem, index) => navItem.on('click', event => { event.preventDefault(); carousel.goTo(index); })
+);
+carouselControl.children[0].on('click', () => carousel.previous());
+carouselControl.children[1].on('click', () => carousel.next());
